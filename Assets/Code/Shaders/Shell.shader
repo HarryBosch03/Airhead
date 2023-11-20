@@ -69,6 +69,7 @@
             TEXTURE2D(_Noise);
             SAMPLER(sampler_Noise);
             float _NoiseScale;
+            float4 _Noise_TexelSize;
             
             TEXTURE2D(_Wind);
             SAMPLER(sampler_Wind);
@@ -81,7 +82,7 @@
                 UNITY_TRANSFER_INSTANCE_ID(input, output);
 
                 output.positionWS = TransformObjectToWorld(input.vertex.xyz);
-                output.percent = (float)UNITY_GET_INSTANCE_ID(input) / _ShellCount;
+                output.percent = 1.0 - (float)UNITY_GET_INSTANCE_ID(input) / _ShellCount;
 
                 output.normal = TransformObjectToWorldNormal(input.normal);
                 output.positionWS += output.normal * _Extrude * output.percent;
@@ -122,14 +123,15 @@
             half4 frag(Varyings input) : SV_Target
             {
                 UNITY_SETUP_INSTANCE_ID(input);
-
-                float2 wind = SAMPLE_TEXTURE2D_LOD(_Wind, sampler_Wind, float2(_Time[0] * _WindFrequency, 0.0), 0) * _WindStrength;
+                
+                float2 varianceUV = input.positionOS.xz * input.scale / (_TexScale * _NoiseScale);
+                float variance = SAMPLE_TEXTURE2D(_Wind, sampler_Wind, varianceUV / _WindVariation);
+                
+                float2 wind = pow(SAMPLE_TEXTURE2D_LOD(_Wind, sampler_Wind, float2(_Time[0] * _WindFrequency, variance), 0), 4.0) * _WindStrength;
                 input.positionOS.xz += wind / input.scale.xz * input.percent;
-
+                
                 float noise = SampleTriplanar(_Noise, sampler_Noise, input, _TexScale * _NoiseScale).r;
                 clip(noise - input.percent + _Thickness - 1.0);
-                
-                
                 input.normal = normalize(input.normal);
                 input.tangent = normalize(input.tangent);
 

@@ -32,7 +32,7 @@ namespace Airhead.Runtime.Rendering
             var propertyBlock = new MaterialPropertyBlock();
             propertyBlock.SetInt("_ShellCount", shells);
             
-            Graphics.DrawMeshInstanced(filter.mesh, submesh, material, data, shells, propertyBlock);
+            Graphics.DrawMeshInstanced(filter.sharedMesh, submesh, material, data, shells, propertyBlock);
         }
     }
 }

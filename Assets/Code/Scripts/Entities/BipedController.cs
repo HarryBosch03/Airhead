@@ -133,6 +133,7 @@ namespace Airhead.Runtime.Entities
             }
             
             force.y = 0.0f;
+            force = Vector3.ClampMagnitude(force, moveSpeed * 2.0f / accelerationTime);
             body.AddForce(force, ForceMode.Acceleration);
         }
 

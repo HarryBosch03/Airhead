@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Gray
+  m_Name: Bricks
   m_Shader: {fileID: -6465566751694194690, guid: 000a3f08d8b24a246a73b1717e24c553, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -45,7 +45,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: d55297d3cecb4c2448f048a419262709, type: 3}
+        m_Texture: {fileID: 2800000, guid: 5f63684268020074f8f2d5458a2d76c6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -58,6 +58,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Pattern:
+        m_Texture: {fileID: 2800000, guid: ce01fa5c9b5defd4c875c4e66d7b8f3f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
@@ -79,10 +83,13 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaClip: 0
+    - _Balance: 0
     - _Blend: 0
+    - _Brightness: 0
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
+    - _Contrast: 0
     - _Cull: 2
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
@@ -95,12 +102,14 @@ Material:
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
+    - _PatternFeedback: 0.214
+    - _PatternScale: 1
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _RoughnessA: 1
     - _RoughnessB: 1
-    - _Scale: 2
+    - _Scale: 8
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -111,9 +120,10 @@ Material:
     m_Colors:
     - _BaseColor: {r: 0.254717, g: 0.254717, b: 0.254717, a: 1}
     - _Color: {r: 0.25471696, g: 0.25471696, b: 0.25471696, a: 1}
-    - _ColorA: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 1}
-    - _ColorB: {r: 0.26415092, g: 0.26415092, b: 0.26415092, a: 1}
+    - _ColorA: {r: 0.8773585, g: 0.7976268, b: 0.5338644, a: 1}
+    - _ColorB: {r: 0.7830189, g: 0.7082902, b: 0.46168566, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _PatternColor: {r: 0.37735838, g: 0.25712565, b: 0.20113906, a: 0.44705883}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &5857887010207649770
