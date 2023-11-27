@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Airhead.Runtime.Entities;
 using UnityEngine;
 
 namespace Airhead.Runtime.Player
@@ -15,7 +16,7 @@ namespace Airhead.Runtime.Player
         public abstract string AmmoString { get; }
         public abstract bool IsReloading { get; }
         public abstract float ReloadPercent { get; }
-
+        
         protected virtual void Awake()
         {
             MainCam = Camera.main;
@@ -29,7 +30,7 @@ namespace Airhead.Runtime.Player
 
             foreach (var e in list)
             {
-                if (e.collider.transform.IsChildOf(transform)) continue;
+                if (e.collider.transform.IsChildOf(Player.transform)) continue;
                 
                 hit = e;
                 return true;

@@ -37,6 +37,8 @@ namespace Airhead.Runtime.Player
         public override bool IsReloading => currentMagazine < magazineSize;
         public override float ReloadPercent => currentMagazine < magazineSize ? (Time.time - lastFireTime) / reloadTime : 1.0f;
 
+        public event System.Action ShootEvent; 
+
         protected override void Awake()
         {
             base.Awake();
@@ -117,6 +119,8 @@ namespace Airhead.Runtime.Player
             }
 
             if (flash) flash.Play();
+
+            ShootEvent?.Invoke();
 
             currentMagazine--;
             lastFireTime = Time.time;
