@@ -28,7 +28,6 @@ namespace Airhead.Runtime.Player
         public float trailDensity = 16.0f;
         public Vector3 muzzleOffset;
 
-        private Animator animator;
         private bool shootFlag;
         private float lastFireTime;
 
@@ -42,7 +41,6 @@ namespace Airhead.Runtime.Player
         {
             base.Awake();
             var viewport = transform.Find("Viewport");
-            animator = viewport.GetComponentInChildren<Animator>();
 
             foreach (var t in viewport.GetComponentsInChildren<Transform>())
             {
@@ -64,9 +62,6 @@ namespace Airhead.Runtime.Player
                 if (Player.ShootAction.WasPressedThisFrame()) shootFlag = true;
             }
             else shootFlag = Player.ShootAction.IsPressed();
-
-            animator.SetFloat("movement", Player.Biped.Movement);
-            animator.SetBool("isOnGround", Player.Biped.IsOnGround);
         }
 
         private void FixedUpdate()
@@ -121,7 +116,6 @@ namespace Airhead.Runtime.Player
                 }
             }
 
-            animator.Play("Shoot", 0, 0.0f);
             if (flash) flash.Play();
 
             currentMagazine--;

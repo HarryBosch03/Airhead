@@ -5497,6 +5497,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 258324640741715147, guid: 119a533d640f1054098812de65acd63e, type: 3}
+      propertyPath: damper
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 258324640741715147, guid: 119a533d640f1054098812de65acd63e, type: 3}
+      propertyPath: spring
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 258324640741715147, guid: 119a533d640f1054098812de65acd63e, type: 3}
+      propertyPath: torqueConstant
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7221010653608765439, guid: 119a533d640f1054098812de65acd63e, type: 3}
       propertyPath: InitialModule.startColor.maxColor.a
       value: 1
