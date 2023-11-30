@@ -57,7 +57,7 @@ namespace Airhead.Runtime.Level.Props
         public virtual void Damage(DamageInstance damage)
         {
             if (dead) return;
-            health -= damage.Calculate();
+            health -= damage.EvaluateDamage();
             if (health <= 0) Die();
         }
 

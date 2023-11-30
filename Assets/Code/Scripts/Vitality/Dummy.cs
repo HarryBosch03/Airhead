@@ -42,7 +42,7 @@ namespace Airhead.Runtime.Vitality
 
         public override void Damage(DamageInstance instance)
         {
-            var damage = instance.Calculate();
+            var damage = instance.EvaluateDamage();
             damageAccumulator += damage;
             if (damageFrame != Time.frameCount) frameDamageAccumulator = 0;
 

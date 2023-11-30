@@ -11,7 +11,7 @@ namespace Airhead.Runtime.Player
         [Space]
         public Vector3 basisPosition;
         public Vector3 basisRotation;
-        
+
         [Space]
         public float velocityLag = 0.002f;
         public float rotationLag = 0.002f;
@@ -33,15 +33,15 @@ namespace Airhead.Runtime.Player
 
         private Vector3 shootPosition;
         private Vector3 shootLinearVelocity;
-        
+
         private Vector3 shootRotation;
         private Vector3 shootAngularVelocity;
-        
+
         private Camera mainCamera;
         private Vector3 position;
         private Quaternion rotation;
         private Quaternion lastCameraRotation;
-        
+
         private float stepDistance;
         private float stepMovement;
 
@@ -63,11 +63,8 @@ namespace Airhead.Runtime.Player
             gun.ShootEvent += OnShoot;
         }
 
-        private void OnDisable()
-        {
-            gun.ShootEvent -= OnShoot;
-        }
-        
+        private void OnDisable() { gun.ShootEvent -= OnShoot; }
+
         private void OnShoot()
         {
             shootLinearVelocity += new Vector3(shootForce.x * Random.Range(-1.0f, 1.0f), shootForce.y, shootForce.z);
@@ -96,7 +93,7 @@ namespace Airhead.Runtime.Player
         {
             var force = -shootPosition * linearShootSpring - shootLinearVelocity * linearShootDamping;
             var torque = -shootRotation * angularShootSpring - shootAngularVelocity * angularShootDamping;
-            
+
             shootPosition += shootLinearVelocity * Time.deltaTime;
             shootLinearVelocity += force * Time.deltaTime;
 
@@ -122,7 +119,7 @@ namespace Airhead.Runtime.Player
             var cameraRotation = mainCamera.transform.rotation;
             var deltaRotation = cameraRotation * Quaternion.Inverse(lastCameraRotation);
             rotation = Quaternion.SlerpUnclamped(Quaternion.identity, deltaRotation, -rotationLag) * rotation;
-            
+
             lastCameraRotation = cameraRotation;
         }
 

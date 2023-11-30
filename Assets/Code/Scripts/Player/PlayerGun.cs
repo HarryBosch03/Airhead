@@ -28,7 +28,6 @@ namespace Airhead.Runtime.Player
         public float trailDensity = 16.0f;
         public Vector3 muzzleOffset;
 
-        private bool shootFlag;
         private float lastFireTime;
 
         private ParticleSystem flash;
@@ -37,7 +36,7 @@ namespace Airhead.Runtime.Player
         public override bool IsReloading => currentMagazine < magazineSize;
         public override float ReloadPercent => currentMagazine < magazineSize ? (Time.time - lastFireTime) / reloadTime : 1.0f;
 
-        public event System.Action ShootEvent; 
+        public event Action ShootEvent; 
 
         protected override void Awake()
         {
@@ -57,18 +56,9 @@ namespace Airhead.Runtime.Player
             currentMagazine = magazineSize;
         }
 
-        private void Update()
-        {
-            if (singleFire)
-            {
-                if (Player.ShootAction.WasPressedThisFrame()) shootFlag = true;
-            }
-            else shootFlag = Player.ShootAction.IsPressed();
-        }
-
         private void FixedUpdate()
         {
-            if (shootFlag)
+            if (UseFlag)
             {
                 Shoot();
             }
@@ -146,7 +136,7 @@ namespace Airhead.Runtime.Player
 
         private void ResetFlags()
         {
-            shootFlag = false;
+            if (singleFire) UseFlag = false;
         }
     }
 }

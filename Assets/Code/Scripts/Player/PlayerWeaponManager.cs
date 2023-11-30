@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +11,15 @@ namespace Airhead.Runtime.Player
         private int currentWeaponIndex;
         private List<PlayerWeapon> registeredWeapons = new();
 
+        public bool UseFlag
+        {
+            get => CurrentWeapon && CurrentWeapon.UseFlag;
+            set
+            {
+                if (CurrentWeapon) CurrentWeapon.UseFlag = value;
+            }
+        }
+        
         public PlayerWeapon CurrentWeapon => currentWeaponIndex >= 0 && currentWeaponIndex < registeredWeapons.Count ? registeredWeapons[currentWeaponIndex] : null;
         
         private void Awake()
@@ -23,7 +33,17 @@ namespace Airhead.Runtime.Player
                 weapon.gameObject.SetActive(false);
             }
 
-            EquipWeapons(0);
+            EquipWeapon(0);
+        }
+
+        private void OnEnable()
+        {
+            EquipWeapon(0);
+        }
+
+        private void OnDisable()
+        {
+            EquipWeapon(-1);
         }
 
         private int NameToIndex(string name)
@@ -37,10 +57,10 @@ namespace Airhead.Runtime.Player
             return -1;
         }
         
-        private void EquipWeapons(int i)
+        private void EquipWeapon(int i)
         {
             if (CurrentWeapon) CurrentWeapon.gameObject.SetActive(false);
-            currentWeaponIndex = NameToIndex(equippedWeapons[i]);
+            currentWeaponIndex = i != -1 ? NameToIndex(equippedWeapons[i]) : -1;
             if (CurrentWeapon) CurrentWeapon.gameObject.SetActive(true);
         }
     }

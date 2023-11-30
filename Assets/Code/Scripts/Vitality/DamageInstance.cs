@@ -16,15 +16,14 @@ namespace Airhead.Runtime.Vitality
             this.point = point;
             this.direction = direction;
         }
-        
-        
-        public int Calculate()
+
+        public int EvaluateDamage()
         {
             var damage = args.damage;
 
-            if (!args.ignoreLocationalDamage) damage *= locationalDamage; 
-            
             return Mathf.Max(1, Mathf.FloorToInt(damage));
         }
+
+        public Vector3 EvaluateForce() => direction * EvaluateDamage() * args.force;
     }
 }

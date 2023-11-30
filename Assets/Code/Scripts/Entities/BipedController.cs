@@ -1,3 +1,4 @@
+using System;
 using Airhead.Runtime.Utility;
 using UnityEngine;
 
@@ -55,6 +56,20 @@ namespace Airhead.Runtime.Entities
         {
             body = gameObject.GetOrAddComponent<Rigidbody>();
             view = transform.Find("View");
+        }
+
+        private void OnEnable()
+        {
+            body.isKinematic = false;
+            body.useGravity = true;
+        }
+
+        private void OnDisable()
+        {
+            body.velocity = Vector3.zero;
+            body.angularVelocity = Vector3.zero;
+            body.isKinematic = false;
+            body.useGravity = false;
         }
 
         private void FixedUpdate()

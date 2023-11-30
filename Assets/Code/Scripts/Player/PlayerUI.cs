@@ -1,3 +1,4 @@
+using System;
 using Airhead.Runtime.Utility;
 using TMPro;
 using UnityEngine;
@@ -12,6 +13,7 @@ namespace Airhead.Runtime.Player
         public float weaponFillFadeoutTime = 0.4f;
         
         private PlayerWeaponManager weaponManager;
+        private Canvas canvas;
         private CanvasGroup weaponGroup;
         private Image weaponFill;
         private float weaponFillMaxAlpha;
@@ -23,16 +25,28 @@ namespace Airhead.Runtime.Player
 
         private void Awake()
         {
-            health = GetComponentInParent<PlayerHealth>();
-            damageTaken = transform.Find<TMP_Text>("PlayerInfo/DamageTaken");
+            canvas = transform.Find<Canvas>("Overlay");
             
-            weaponManager = GetComponentInParent<PlayerWeaponManager>();
-            weaponGroup = transform.Find<CanvasGroup>("WeaponInfo");
+            health = GetComponent<PlayerHealth>();
+            damageTaken = canvas.transform.Find<TMP_Text>("PlayerInfo/DamageTaken");
+            
+            weaponManager = GetComponent<PlayerWeaponManager>();
+            weaponGroup = canvas.transform.Find<CanvasGroup>("WeaponInfo");
             weaponFill = weaponGroup.transform.Find<Image>("Fill");
             weaponName = weaponGroup.transform.Find<TMP_Text>("Name");
             weaponAmmo = weaponGroup.transform.Find<TMP_Text>("Ammo");
 
             weaponFillMaxAlpha = weaponFill.color.a;
+        }
+
+        private void OnEnable()
+        {
+            canvas.gameObject.SetActive(true);
+        }
+
+        private void OnDisable()
+        {
+            canvas.gameObject.SetActive(false);
         }
 
         private void Update()

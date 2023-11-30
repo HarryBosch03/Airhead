@@ -87,7 +87,6 @@ GameObject:
   - component: {fileID: 258324639562822883}
   - component: {fileID: 258324639562822880}
   - component: {fileID: 258324639562822881}
-  - component: {fileID: 2987750152600201797}
   m_Layer: 0
   m_Name: Overlay
   m_TagString: Untagged
@@ -162,19 +161,6 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 0
---- !u!114 &2987750152600201797
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 258324639562822892}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b682eb84f5cf4ac408ada1a1f9f6ef0d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponFillFadeoutTime: 0.2
 --- !u!1 &258324639809194433
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,7 +235,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 258324640443059801}
-  - component: {fileID: 258324640443059806}
   - component: {fileID: 258324640443059804}
   - component: {fileID: 258324640443059807}
   - component: {fileID: 258324640443059800}
@@ -257,8 +242,10 @@ GameObject:
   - component: {fileID: 9033771922504739945}
   - component: {fileID: 5272632907384473703}
   - component: {fileID: 6107774049984728593}
+  - component: {fileID: 2807643691631159023}
+  - component: {fileID: 4048541644588333896}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Player-Avatar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -282,23 +269,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &258324640443059806
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 258324640443059802}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e16d64d4c034a2943a19f75a3dd0c6f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inputAsset: {fileID: -944628639613478452, guid: a2bc91d19ca6534449e82c551df8191f, type: 3}
-  mouseSensitivity: 0.3
-  cameraMoveDutchMax: 3
-  cameraMoveDutchResponse: 0.06
-  dutchSmoothing: 0.1
 --- !u!114 &258324640443059804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -431,7 +401,32 @@ MonoBehaviour:
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 0
   <SceneId>k__BackingField: 0
-  <AssetPathHash>k__BackingField: 9524810972878619163
+  <AssetPathHash>k__BackingField: 17741077573229666461
+--- !u!114 &2807643691631159023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 258324640443059802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b682eb84f5cf4ac408ada1a1f9f6ef0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponFillFadeoutTime: 0.2
+--- !u!114 &4048541644588333896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 258324640443059802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 049cb9521d3948c998c417cbbd00f871, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &258324640696831396
 GameObject:
   m_ObjectHideFlags: 0
@@ -513,7 +508,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage:
     damage: 1
-    ignoreLocationalDamage: 1
+    force: 1
+    lethal: 0
   singleFire: 1
   fireRate: 400
   projectilesPerShot: 14

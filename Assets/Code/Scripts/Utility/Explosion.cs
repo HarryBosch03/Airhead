@@ -7,7 +7,7 @@ namespace Airhead.Runtime.Utility
     [System.Serializable]
     public class Explosion
     {
-        public int damage;
+        public DamageArgs damage;
         public AnimationCurve falloff;
         public float range;
         public GameObject fxPrefab;
@@ -41,11 +41,8 @@ namespace Airhead.Runtime.Utility
 
                         if ((Object)target)
                         {
-                            var args = new DamageArgs()
-                            {
-                                damage = Mathf.Ceil(damage * falloff.Evaluate(hit.distance / range)),
-                                ignoreLocationalDamage = true,
-                            };
+                            var args = damage.Clone();
+                            args.damage = Mathf.Ceil(args.damage * falloff.Evaluate(hit.distance / range));
                             target.Damage(new DamageInstance(args, hit.point, direction));
                         }
                     }

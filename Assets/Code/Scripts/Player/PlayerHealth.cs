@@ -1,8 +1,6 @@
-using System;
 using Airhead.Runtime.Entities;
 using Airhead.Runtime.Vitality;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Airhead.Runtime.Player
 {
@@ -17,6 +15,8 @@ namespace Airhead.Runtime.Player
 
         private BipedController biped;
 
+        public bool Dead { get; private set; }
+        
         private void Awake()
         {
             biped = GetComponent<BipedController>();
@@ -24,12 +24,38 @@ namespace Airhead.Runtime.Player
 
         public void Damage(DamageInstance instance)
         {
-            var damage = instance.Calculate();
+            if (Dead) return;
+            
+            var damage = instance.EvaluateDamage();
             damageTaken += damage;
 
-            var force = damage * (damageForce + damageForceHealthPenalty * damageTaken / 100.0f);
-            force = Mathf.Min(maxDamageForce, force);
-            biped.body.AddForce(instance.direction * force, ForceMode.VelocityChange);
+            var penalty = 1.0f + damageForceHealthPenalty * damageTaken / 100.0f;
+            biped.body.AddForce(instance.EvaluateForce() * penalty);
+
+            if (instance.args.lethal)
+            {
+                Die(instance);
+            }
+        }
+
+        public void Die(DamageInstance instance)
+        {
+            Dead = true;
+        }
+
+        public void Respawn()
+        {
+            Dead = false;
+            
+            var sp = SpawnPoint.GetSpawnPoint();
+            var body = biped.body;
+
+            body.position = sp.position;
+            body.rotation = sp.rotation;
+            body.velocity = Vector3.zero;
+            body.angularVelocity = Vector3.zero;
+            
+            damageTaken = 0;
         }
     }
 }
