@@ -6,9 +6,10 @@ namespace Airhead.Runtime.Entities
 {
     [SelectionBase]
     [DisallowMultipleComponent]
-    public sealed class BipedController : MonoBehaviour
+    public sealed class PlayerMovement : MonoBehaviour
     {
         #region PROPERTIES
+
         public float moveSpeed = 12.0f;
         public float accelerationTime = 0.1f;
         public float jumpHeight = 2.2f;
@@ -26,6 +27,16 @@ namespace Airhead.Runtime.Entities
         [Range(0.0f, 1.0f)]
         public float heightSmoothing = 0.4f;
 
+        [Space]
+        [Range(0.0f, 1.0f)]
+        public float slideMinSpeed = 0.2f;
+        public float slideBoost;
+        public float slideBoostDuration;
+        public float slideBoostCooldown;
+        [Range(0.0f, 1.0f)]
+        public float slideFriction;
+        public float slidingCameraHeight;
+
         #endregion
 
         [HideInInspector] public Vector3 moveInput;
@@ -35,8 +46,14 @@ namespace Airhead.Runtime.Entities
         [HideInInspector] public Vector2 viewRotation;
         [HideInInspector] public Rigidbody body;
 
+        [HideInInspector] public bool slideInput;
+        public bool Sliding { get; private set; }
+        private Vector3 slideDirection;
+        private float lastSlideBoostTime;
+
         private float height;
         private RaycastHit groundHit;
+        private CapsuleCollider movementCollider;
 
         public bool IsOnGround { get; private set; }
 
@@ -51,10 +68,10 @@ namespace Airhead.Runtime.Entities
 
         private Vector3 Gravity => Physics.gravity * (body.velocity.y > 0.0f ? upGravity : downGravity);
 
-
-        private  void Awake()
+        private void Awake()
         {
             body = gameObject.GetOrAddComponent<Rigidbody>();
+            movementCollider = GetComponent<CapsuleCollider>();
             view = transform.Find("View");
         }
 
@@ -62,6 +79,7 @@ namespace Airhead.Runtime.Entities
         {
             body.isKinematic = false;
             body.useGravity = true;
+            movementCollider.enabled = false;
         }
 
         private void OnDisable()
@@ -78,6 +96,35 @@ namespace Airhead.Runtime.Entities
             Move();
             Jump();
             ApplyGravity();
+            Collide();
+        }
+
+        private void Collide()
+        {
+            movementCollider.enabled = true;
+            var bounds = movementCollider.bounds;
+            var list = Physics.OverlapBox(bounds.center, bounds.extents, Quaternion.identity);
+
+            foreach (var other in list)
+            {
+                if (other.transform.IsChildOf(transform)) continue;
+                
+                if (!Physics.ComputePenetration(
+                        movementCollider,
+                        movementCollider.transform.position,
+                        movementCollider.transform.rotation,
+                        other,
+                        other.transform.position,
+                        other.transform.rotation,
+                        out var normal,
+                        out var distance)
+                   ) continue;
+
+                normal.Normalize();
+                body.position += normal * distance;
+                body.velocity += normal * Mathf.Max(0.0f, Vector3.Dot(-body.velocity, normal));
+            }
+            movementCollider.enabled = false;
         }
 
         private void ApplyGravity()
@@ -89,7 +136,7 @@ namespace Airhead.Runtime.Entities
         private void Jump()
         {
             if (IsOnGround) airJumpsLeft = maxAirJumps;
-            
+
             if (!jump) return;
 
             if (!IsOnGround)
@@ -110,7 +157,7 @@ namespace Airhead.Runtime.Entities
             body.velocity = velocity;
             airJumpsLeft--;
         }
-        
+
         private float GetJumpForce(float jumpHeight) => Mathf.Sqrt(2.0f * -Physics.gravity.y * upGravity * jumpHeight);
 
         private void LookForGround()
@@ -133,6 +180,12 @@ namespace Airhead.Runtime.Entities
 
         private void Move()
         {
+            if (slideInput || Sliding)
+            {
+                Slide();
+                return;
+            }
+
             var target = Vector3.ClampMagnitude(moveInput, 1.0f) * moveSpeed;
             Vector3 force;
 
@@ -146,10 +199,53 @@ namespace Airhead.Runtime.Entities
                 var acceleration = airMovement * moveInput.magnitude;
                 force = (target - body.velocity) * acceleration;
             }
-            
+
             force.y = 0.0f;
             force = Vector3.ClampMagnitude(force, moveSpeed * 2.0f / accelerationTime);
             body.AddForce(force, ForceMode.Acceleration);
+        }
+
+        private void Slide()
+        {
+            var v = body.velocity;
+            var speed = Mathf.Sqrt(v.x * v.x + v.z * v.z);
+
+            if (!IsOnGround || speed / moveSpeed < slideMinSpeed)
+            {
+                Sliding = false;
+                return;
+            }
+
+            if (!Sliding)
+            {
+                Sliding = true;
+                slideDirection = new Vector3(body.velocity.x, 0.0f, body.velocity.z).normalized;
+                if (slideDirection.magnitude < 0.5f)
+                {
+                    Sliding = false;
+                    return;
+                }
+
+                if (Time.time - lastSlideBoostTime > slideBoostDuration + slideBoostCooldown)
+                {
+                    lastSlideBoostTime = Time.time;
+                    body.velocity = new Vector3
+                    {
+                        x = slideDirection.x * moveSpeed * (1.0f + slideBoost),
+                        z = slideDirection.z * moveSpeed * (1.0f + slideBoost),
+                        y = body.velocity.y,
+                    };
+                }
+            }
+
+            var friction = Time.time - lastSlideBoostTime < slideBoostDuration ? 0.0f : slideFriction;
+            var force = -new Vector3(body.velocity.x, 0.0f, body.velocity.z) * friction;
+            body.AddForce(force, ForceMode.VelocityChange);
+
+            if (!slideInput)
+            {
+                Sliding = false;
+            }
         }
 
         private void Update()
@@ -159,7 +255,7 @@ namespace Airhead.Runtime.Entities
 
             transform.rotation = Quaternion.Euler(0.0f, viewRotation.x, 0.0f);
 
-            view.position = transform.position + Vector3.up * 1.8f;
+            view.position = transform.position + Vector3.up * (Sliding ? slidingCameraHeight : 1.8f);
             view.rotation = Quaternion.Euler(-viewRotation.y, viewRotation.x, 0.0f);
         }
     }

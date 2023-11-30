@@ -13,14 +13,14 @@ namespace Airhead.Runtime.Player
     {
         private StateMachine<PlayerAvatar> stateMachine = new();
         public PlayerController Controller { get; set; }
-        public BipedController Biped { get; private set; }
+        public PlayerMovement Movement { get; private set; }
         public PlayerHealth Health { get; private set; }
         public PlayerWeaponManager WeaponManager { get; private set; }
         public PlayerUI PlayerUI { get; private set; }
 
         private void Awake()
         {
-            Biped = GetComponent<BipedController>();
+            Movement = GetComponent<PlayerMovement>();
             Health = GetComponent<PlayerHealth>();
             WeaponManager = GetComponent<PlayerWeaponManager>();
             PlayerUI = GetComponent<PlayerUI>();
@@ -29,7 +29,7 @@ namespace Airhead.Runtime.Player
         private void OnEnable()
         {
             stateMachine.Target = this;
-            Biped.enabled = false;
+            Movement.enabled = false;
             Health.enabled = false;
             WeaponManager.enabled = false;
             PlayerUI.enabled = false;

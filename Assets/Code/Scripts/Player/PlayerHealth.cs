@@ -13,13 +13,13 @@ namespace Airhead.Runtime.Player
         public float damageForceHealthPenalty = 0.3f;
         public float maxDamageForce = 100.0f;
 
-        private BipedController biped;
+        private PlayerMovement biped;
 
         public bool Dead { get; private set; }
         
         private void Awake()
         {
-            biped = GetComponent<BipedController>();
+            biped = GetComponent<PlayerMovement>();
         }
 
         public void Damage(DamageInstance instance)

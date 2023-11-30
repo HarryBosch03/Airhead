@@ -237,13 +237,13 @@ GameObject:
   - component: {fileID: 258324640443059801}
   - component: {fileID: 258324640443059804}
   - component: {fileID: 258324640443059807}
-  - component: {fileID: 258324640443059800}
   - component: {fileID: 258324640443059805}
   - component: {fileID: 9033771922504739945}
   - component: {fileID: 5272632907384473703}
   - component: {fileID: 6107774049984728593}
   - component: {fileID: 2807643691631159023}
   - component: {fileID: 4048541644588333896}
+  - component: {fileID: -8467167552174392317}
   m_Layer: 0
   m_Name: Player-Avatar
   m_TagString: Untagged
@@ -292,11 +292,18 @@ MonoBehaviour:
   airJumpsLeft: 2
   airJumpPenalty: 0
   heightSmoothing: 0.4
+  slideMinSpeed: 0.2
+  slideBoost: 1.5
+  slideBoostDuration: 0.4
+  slideBoostCooldown: 1
+  slideFriction: 0.005
+  slidingCameraHeight: 0.5
   moveInput: {x: 0, y: 0, z: 0}
   jump: 0
   view: {fileID: 0}
   viewRotation: {x: 0, y: 0}
   body: {fileID: 0}
+  slideInput: 0
 --- !u!54 &258324640443059807
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -313,20 +320,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 2
---- !u!136 &258324640443059800
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 258324640443059802}
-  m_Material: {fileID: 13400000, guid: 921216da816a4ba489087bada2173a6d, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.2
-  m_Height: 1.2
-  m_Direction: 1
-  m_Center: {x: 0, y: 1.2, z: 0}
 --- !u!114 &258324640443059805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -397,7 +390,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 0
+  <PrefabId>k__BackingField: 1
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 0
   <SceneId>k__BackingField: 0
@@ -427,6 +420,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 049cb9521d3948c998c417cbbd00f871, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &-8467167552174392317
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 258324640443059802}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1.2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.2, z: 0}
 --- !u!1 &258324640696831396
 GameObject:
   m_ObjectHideFlags: 0

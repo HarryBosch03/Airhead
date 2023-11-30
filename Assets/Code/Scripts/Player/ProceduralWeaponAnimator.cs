@@ -48,13 +48,13 @@ namespace Airhead.Runtime.Player
         private Vector3 smoothedPosition;
         private Quaternion smoothedRotation;
 
-        private BipedController biped;
+        private PlayerMovement biped;
         private PlayerGun gun;
 
         private void Awake()
         {
             mainCamera = Camera.main;
-            biped = GetComponentInParent<BipedController>();
+            biped = GetComponentInParent<PlayerMovement>();
         }
 
         private void OnEnable()

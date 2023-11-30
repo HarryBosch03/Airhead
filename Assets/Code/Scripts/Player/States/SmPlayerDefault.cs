@@ -8,7 +8,7 @@ namespace Airhead.Runtime.Player.States
     {
         protected override void OnEnter()
         {
-            Target.Biped.enabled = true;
+            Target.Movement.enabled = true;
             Target.Health.enabled = true;
             Target.WeaponManager.enabled = true;
             Target.PlayerUI.enabled = true;
@@ -25,7 +25,7 @@ namespace Airhead.Runtime.Player.States
 
         protected override void OnExit()
         {
-            Target.Biped.enabled = false;
+            Target.Movement.enabled = false;
             Target.Health.enabled = false;
             Target.WeaponManager.enabled = false;
             Target.PlayerUI.enabled = false;

@@ -9,11 +9,11 @@ namespace Airhead.Runtime.Player
     {
         public Animator animator;
         
-        private BipedController biped;
+        private PlayerMovement biped;
 
         private void Awake()
         {
-            biped = GetComponent<BipedController>();
+            biped = GetComponent<PlayerMovement>();
         }
 
         private void FixedUpdate()
