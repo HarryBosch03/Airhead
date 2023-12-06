@@ -108,7 +108,7 @@ namespace Airhead.Runtime.Entities
             foreach (var other in list)
             {
                 if (other.transform.IsChildOf(transform)) continue;
-                
+
                 if (!Physics.ComputePenetration(
                         movementCollider,
                         movementCollider.transform.position,
@@ -124,6 +124,7 @@ namespace Airhead.Runtime.Entities
                 body.position += normal * distance;
                 body.velocity += normal * Mathf.Max(0.0f, Vector3.Dot(-body.velocity, normal));
             }
+
             movementCollider.enabled = false;
         }
 
@@ -165,7 +166,20 @@ namespace Airhead.Runtime.Entities
             var wasOnGround = IsOnGround;
             var ray = new Ray(body.position + Vector3.up, Vector3.down);
             var castDistance = wasOnGround ? 1.0f + stepHeight : 1.0f;
-            IsOnGround = Physics.Raycast(ray, out groundHit, castDistance) && body.velocity.y < float.Epsilon;
+
+            IsOnGround = false;
+            if (body.velocity.y < float.Epsilon)
+            {
+                var hits = Physics.RaycastAll(ray, castDistance);
+                foreach (var hit in hits)
+                {
+                    if (hit.collider.transform.IsChildOf(transform)) continue;
+
+                    IsOnGround = true;
+                    groundHit = hit;
+                    break;
+                }
+            }
 
             if (!IsOnGround) height = body.position.y;
             else height = Mathf.Lerp(height, groundHit.point.y, heightSmoothing);

@@ -1,21 +1,18 @@
 using System;
 using Airhead.Runtime.Utility;
-using Airhead.Runtime.Vitality;
 using Unity.Collections;
 using UnityEngine;
-using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
-namespace Airhead.Runtime.Player
+namespace Airhead.Runtime.Weapons
 {
     public class PlayerGun : PlayerWeapon
     {
-        public DamageArgs damage;
+        public Projectile projectile;
         public bool singleFire = false;
         public float fireRate = 180.0f;
         public int projectilesPerShot = 1;
         public float spread;
-        public float maxRange = 100.0f;
 
         [Space]
         public int magazineSize;
@@ -23,9 +20,6 @@ namespace Airhead.Runtime.Player
         [ReadOnly] public int currentMagazine;
         
         [Space]
-        public GameObject hitFX;
-        public ParticleSystem trailFX;
-        public float trailDensity = 16.0f;
         public Vector3 muzzleOffset;
 
         private float lastFireTime;
@@ -82,30 +76,7 @@ namespace Airhead.Runtime.Player
                 var direction = MainCam.transform.TransformDirection(random.x * spread, random.y * spread, 10.0f).normalized;
                 var point = MainCam.transform.position;
 
-                var ray = new Ray(point, direction);
-                var end = ray.GetPoint(maxRange);
-                if (Raycast(ray, out var hit, maxRange))
-                {
-                    end = hit.point;
-                    ProcessHit(ray, hit);
-                }
-                
-                if (trailFX)
-                {
-                    var start = transform.TransformPoint(muzzleOffset);
-                    var vector = end - start;
-                    var dist = vector.magnitude;
-                    var step = 1.0f / trailDensity;
-                    var dir = vector / dist;
-                    
-                    for (var d = 0.0f; d < dist; d += step)
-                    {
-                        trailFX.Emit(new ParticleSystem.EmitParams()
-                        {
-                            position = start + dir * d,
-                        }, 1);
-                    }
-                }
+                projectile.Spawn(point, direction, Player.gameObject);
             }
 
             if (flash) flash.Play();
@@ -114,17 +85,6 @@ namespace Airhead.Runtime.Player
 
             currentMagazine--;
             lastFireTime = Time.time;
-        }
-
-        private void ProcessHit(Ray ray, RaycastHit hit)
-        {
-            var damageable = hit.collider.GetComponentInParent<IDamageable>();
-            if ((Object)damageable)
-            {
-                damageable.Damage(new DamageInstance(damage, hit.point, ray.direction));
-            }
-
-            if (hitFX) Instantiate(hitFX, hit.point, Quaternion.LookRotation(hit.normal));
         }
 
         private void OnDrawGizmosSelected()

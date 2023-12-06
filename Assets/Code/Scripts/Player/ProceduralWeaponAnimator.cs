@@ -1,5 +1,6 @@
 ﻿using System;
 using Airhead.Runtime.Entities;
+using Airhead.Runtime.Weapons;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

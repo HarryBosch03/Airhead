@@ -1,9 +1,8 @@
-using System.Collections.Generic;
 using System.Linq;
-using Airhead.Runtime.Entities;
+using Airhead.Runtime.Player;
 using UnityEngine;
 
-namespace Airhead.Runtime.Player
+namespace Airhead.Runtime.Weapons
 {
     public abstract class PlayerWeapon : MonoBehaviour
     {

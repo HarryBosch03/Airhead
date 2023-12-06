@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Airhead.Runtime.Weapons;
 using UnityEngine;
 
 namespace Airhead.Runtime.Player

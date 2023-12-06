@@ -88,7 +88,7 @@ namespace Airhead.Runtime.Player
                 Avatar.Movement.slideInput = slideAction.IsPressed();
 
                 var velocity = Avatar.Movement.body.velocity;
-                var speed = -Vector3.Dot(velocity, transform.right);
+                var speed = -Vector3.Dot(velocity, Avatar.transform.right);
                 dutch = Mathf.Atan(speed * cameraMoveDutchResponse) * 2.0f / Mathf.PI * cameraMoveDutchMax;
             }
 

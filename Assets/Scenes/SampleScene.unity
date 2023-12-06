@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5309,6 +5309,116 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1867544397}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1875635494
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1875635495}
+  - component: {fileID: 1875635496}
+  m_Layer: 0
+  m_Name: DebuggingActions
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1875635495
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875635494}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.0982413, y: 3.3369102, z: 19.90342}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1875635496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875635494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44978d2b459d3b149a2a6fb46681f5e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startHost:
+    m_Name: Start Host
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: d27022f8-0e65-4a9c-8a0b-c0787769227c
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: One Modifier
+      m_Id: 5fa5eadf-846b-4e1c-85ca-feb4d3d2c7df
+      m_Path: OneModifier
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Start Host
+      m_Flags: 4
+    - m_Name: modifier
+      m_Id: e29563a6-33d5-4ec8-9a6b-1a0d41422692
+      m_Path: <Keyboard>/leftCtrl
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Start Host
+      m_Flags: 8
+    - m_Name: binding
+      m_Id: 5402dd6b-e446-4263-8909-8d2ded7defbc
+      m_Path: <Keyboard>/tab
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Start Host
+      m_Flags: 8
+    m_Flags: 0
+  startClient:
+    m_Name: Start Client
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: ce9aba3b-e299-4510-9ee8-b138c6bac91e
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: One Modifier
+      m_Id: 2bc13ce7-4461-4341-9677-9d68b92bf7d5
+      m_Path: OneModifier
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Start Client
+      m_Flags: 4
+    - m_Name: modifier
+      m_Id: fab80ec7-f40c-4d3d-a0b8-90668639e0d0
+      m_Path: <Keyboard>/leftShift
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Start Client
+      m_Flags: 8
+    - m_Name: binding
+      m_Id: 73b40d81-1514-4096-a0b3-31b49bbd4c6c
+      m_Path: <Keyboard>/tab
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Start Client
+      m_Flags: 8
+    m_Flags: 0
 --- !u!1 &1890435105
 GameObject:
   m_ObjectHideFlags: 0
